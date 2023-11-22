@@ -25,7 +25,6 @@ public class Microclimate {
     @Column(name = "lightLevel")
     private Float lightLevel;
 
-    // Assuming a bidirectional one-to-one relationship
     @OneToOne(mappedBy = "initialMicroclimate")
     private MicroclimatePlan plan;
 

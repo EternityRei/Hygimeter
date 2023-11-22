@@ -18,13 +18,13 @@ public class UserServiceImpl implements UserService{
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
-    //private final PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public UserDTO register(UserDTO userDTO) {
         checkEmailIsUnique(userDTO.getEmail());
         User user = userMapper.toUser(userDTO);
-        //user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         userRepository.save(user);
         return userMapper.toUserDTO(user);

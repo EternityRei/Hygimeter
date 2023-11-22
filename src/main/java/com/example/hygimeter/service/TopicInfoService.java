@@ -11,5 +11,5 @@ public interface TopicInfoService {
     void deleteTopicInfo(Integer id);
     TopicInfoDTO getTopicInfoById(Integer id);
     List<TopicInfoDTO> findAllTopics();
-    List<TopicInfoDTO> findTopicsByTheme(ThemeDTO themeDTO);
+    List<TopicInfoDTO> findTopicsByTheme(List<ThemeDTO> themeDTO);
 }

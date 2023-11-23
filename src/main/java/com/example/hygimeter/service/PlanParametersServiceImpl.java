@@ -38,7 +38,7 @@ public class PlanParametersServiceImpl implements PlanParametersService{
         PlanParameters planParameters = planParametersRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Plan parameters not found"));
 
-        planParametersRepository.deleteById(id);
+        planParametersRepository.deleteById(planParameters.getId());
     }
 
     @Override

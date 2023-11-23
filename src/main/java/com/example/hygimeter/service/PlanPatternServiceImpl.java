@@ -41,7 +41,7 @@ public class PlanPatternServiceImpl implements PlanPatternService{
         PlanPattern planPattern = planPatternRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Plan Pattern not found"));
 
-        planPatternRepository.deleteById(id);
+        planPatternRepository.deleteById(planPattern.getId());
     }
 
     @Override

@@ -39,7 +39,7 @@ public class PlanPatternServiceImpl implements PlanPatternService{
     @Override
     public void deletePlanPattern(Integer id) {
         PlanPattern planPattern = planPatternRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Humidity not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Plan Pattern not found"));
 
         planPatternRepository.deleteById(id);
     }
@@ -47,7 +47,7 @@ public class PlanPatternServiceImpl implements PlanPatternService{
     @Override
     public PlanPatternDTO getPlanPatternById(Integer id) {
         PlanPattern planPattern = planPatternRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Humidity not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Plan Pattern not found"));
 
         return planPatternMapper.toPlanPatternDTO(planPatternRepository.save(planPattern));
     }

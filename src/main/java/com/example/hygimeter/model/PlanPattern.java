@@ -18,6 +18,9 @@ public class PlanPattern {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @OneToOne(mappedBy = "planPattern")
+    private Microclimate microclimate;
+
     @OneToMany(mappedBy = "planPattern")
     private List<MicroclimatePlan> microclimatePlans;
 

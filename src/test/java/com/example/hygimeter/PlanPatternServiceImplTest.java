@@ -1,4 +1,4 @@
-package com.example.test;
+package com.example.hygimeter;
 
 import com.example.hygimeter.dto.PlanPatternDTO;
 import com.example.hygimeter.mapper.PlanPatternMapper;

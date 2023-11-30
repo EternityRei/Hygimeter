@@ -1,7 +1,6 @@
-package com.example.test.controller;
+package com.example.hygimeter.controller;
 
 import com.example.hygimeter.config.JwtService;
-import com.example.hygimeter.controller.PlanPatternController;
 import com.example.hygimeter.dto.*;
 import com.example.hygimeter.exception.EntityNotFoundException;
 import com.example.hygimeter.exception.InvalidDataException;

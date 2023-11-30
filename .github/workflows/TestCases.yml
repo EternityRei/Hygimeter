@@ -17,8 +17,5 @@ jobs:
           distribution: 'adopt'
           java-version: '17'
 
-      - name: Compile & Execute
-        run: |
-          cd $GITHUB_WORKSPACE/
-          javac PlanPatternControllerTest.java
-          java PlanPatternControllerTest
+      - name: Build with Maven
+        run: mvn clean test

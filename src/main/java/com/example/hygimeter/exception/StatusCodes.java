@@ -1,6 +1,6 @@
 package com.example.hygimeter.exception;
 
-public enum ErrorCode {
+public enum StatusCodes {
     OK,
     FORBIDDEN,
     INVALID_PASSWORD,

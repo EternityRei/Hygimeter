@@ -44,9 +44,11 @@ public class SecurityConfiguration {
                     configuration.setAllowedHeaders(List.of("*"));
                     return configuration;
                 }).and()
-                .authorizeHttpRequests((auth) -> auth.requestMatchers("/", "/auth/login").permitAll())
-                .authorizeHttpRequests((auth) -> auth.requestMatchers(HttpMethod.POST, "/users").permitAll())
-                .authorizeHttpRequests((auth) -> auth.anyRequest().authenticated())
+                .authorizeHttpRequests((auth) -> auth
+                        .requestMatchers(HttpMethod.PUT, "/plan-pattern/**").permitAll()  // Allow PUT requests for /plan-pattern/**
+                        .requestMatchers(HttpMethod.POST, "/users").permitAll()
+                        .requestMatchers("/","/auth/login").permitAll()
+                        .anyRequest().authenticated())
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()

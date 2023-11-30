@@ -10,8 +10,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import static com.example.hygimeter.exception.ErrorCode.INVALID_PASSWORD;
-import static com.example.hygimeter.exception.ErrorCode.IRRELEVANT_EMAIL;
+import static com.example.hygimeter.exception.StatusCodes.INVALID_PASSWORD;
+import static com.example.hygimeter.exception.StatusCodes.IRRELEVANT_EMAIL;
 
 @Service
 @RequiredArgsConstructor

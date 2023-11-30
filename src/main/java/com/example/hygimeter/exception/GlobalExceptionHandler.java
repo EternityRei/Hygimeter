@@ -1,15 +1,41 @@
 package com.example.hygimeter.exception;
 
+import com.example.hygimeter.dto.RemoteResponse;
+import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-    public ResponseEntity<EntityNotFoundException> notFoundException(BaseException ex){
-        log.error("The error occur with message = {}", ex.getMessage());
-        return new ResponseEntity<>(new EntityNotFoundException(ErrorCode.ENTITY_NOT_FOUND.name(), ex.getMessage()), HttpStatus.BAD_REQUEST);
+    @ExceptionHandler(EntityNotFoundException.class)
+    @ResponseStatus(value = HttpStatus.NOT_FOUND)
+    public RemoteResponse notFoundException(BaseException ex) {
+        log.error("The error occur with message={}", ex.getMessage());
+        return RemoteResponse.create(false, ex.getErrorCode(), ex.getMessage(), null);
     }
+
+    @ExceptionHandler({MethodArgumentNotValidException.class, ConstraintViolationException.class, InvalidDataException.class})
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public RemoteResponse handleValidationExceptions(Exception ex) {
+        String message;
+        if (ex instanceof MethodArgumentNotValidException methodArgumentNotValidException) {
+            message = methodArgumentNotValidException.getBindingResult()
+                    .getAllErrors()
+                    .stream()
+                    .findFirst().map(DefaultMessageSourceResolvable::getDefaultMessage)
+                    .orElse(methodArgumentNotValidException.getMessage());
+        } else {
+            message = ex.getMessage();
+        }
+
+        log.error("The error occur with message={}", message);
+        return RemoteResponse.create(false, StatusCodes.INVALID_DATA.name(), message, null);
+    }
+
 }

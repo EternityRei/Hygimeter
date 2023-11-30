@@ -2,9 +2,11 @@ package com.example.hygimeter.controller;
 
 import com.example.hygimeter.auth.AuthenticationRequest;
 import com.example.hygimeter.auth.AuthenticationResponse;
+import com.example.hygimeter.dto.PlanPatternDTO;
 import com.example.hygimeter.dto.RemoteResponse;
 import com.example.hygimeter.dto.UserDTO;
 import com.example.hygimeter.dto.group.OnCreate;
+import com.example.hygimeter.service.PlanPatternService;
 import com.example.hygimeter.service.UserService;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -30,18 +32,34 @@ import static org.springframework.http.HttpStatus.OK;
 @Tag(name = "User", description = "Users func")
 public class UserController {
 
-    private final UserService userService;
-
-    @PostMapping
-    public ResponseEntity<RemoteResponse> registerUser(
-            @Parameter(description = "User data to register", required = true) @Validated(OnCreate.class) @RequestBody UserDTO userDto) {
-        log.info("Start user registration with email={}", userDto.getEmail());
-
-        UserDto createdUserDto = userService.registerUser(userDto);
-
-        log.info("User with email={} registered successfully", userDto.getEmail());
-
-        RemoteResponse successfulResponse = RemoteResponse.create(true, OK.name(), "User is successfully registered", List.of(createdUserDto));
-        return ResponseEntity.status(HttpStatus.CREATED).body(successfulResponse);
-    }
+//    private final UserService userService;
+//    private final PlanPatternService planPatternService;
+//
+//    @PostMapping
+//    public ResponseEntity<RemoteResponse> registerUser(
+//            @Parameter(description = "User data to register", required = true) @Validated(OnCreate.class) @RequestBody UserDTO userDto) {
+//        log.info("Start user registration with email={}", userDto.getEmail());
+//
+//        UserDTO createdUserDto = userService.register(userDto);
+//
+//        log.info("User with email={} registered successfully", userDto.getEmail());
+//
+//        RemoteResponse successfulResponse = RemoteResponse.create(true, OK.name(), "User is successfully registered", List.of(createdUserDto));
+//        return ResponseEntity.status(HttpStatus.CREATED).body(successfulResponse);
+//    }
+//
+//    @PostMapping
+//    public ResponseEntity<RemoteResponse> createPlan(
+//            @Parameter(description = "User create microclimate plan", required = true) @Validated(OnCreate.class)
+//            @RequestBody PlanPatternDTO planPatternDTO) {
+//        log.info("User start creating plan");
+//
+//        PlanPatternDTO createdPlan = planPatternService.createPlanPattern(planPatternDTO);
+//
+//        log.info("Plan was created successfully with id={}", planPatternDTO.getId());
+//
+//        RemoteResponse successfulResponse = RemoteResponse.create(true, OK.name(),
+//                "Plan is successfully created", List.of(createdPlan));
+//        return ResponseEntity.status(HttpStatus.CREATED).body(successfulResponse);
+//    }
 }

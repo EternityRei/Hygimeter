@@ -2,6 +2,7 @@ package com.example.hygimeter.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,6 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Builder
 @Table(name = "PlanPattern")
 public class PlanPattern {
 
@@ -18,7 +20,8 @@ public class PlanPattern {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @OneToOne(mappedBy = "planPattern")
+    @OneToOne
+    @JoinColumn(name = "optimalmicroclimate_id", referencedColumnName = "id")
     private Microclimate microclimate;
 
     @OneToMany(mappedBy = "planPattern")

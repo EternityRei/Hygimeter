@@ -55,6 +55,4 @@ public class ApplicationConfig {
     public AuditorAware<String> auditorProvider() {
         return new AuditConfig();
     }
-
-
 }

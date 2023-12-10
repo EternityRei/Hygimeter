@@ -29,10 +29,11 @@ public class UserDTO {
     private String email;
 
     @NotBlank(groups = OnCreate.class, message = "Password is required field")
-    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\\\d)(?=.*[@$!%*?&])[A-Za-z\\\\d@$!%*?&]{8,}$", message = "Password must contain at least 8 characters, " +
+    @Pattern(regexp = "(?=^.{8,}$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$", message = "Password must contain at least 8 characters, " +
             "upper and lower case letters, numbers and special characters")
     @Schema(description = "User password", required = true)
     private String password;
 
+    @Schema(description = "User role")
     private Role role;
 }

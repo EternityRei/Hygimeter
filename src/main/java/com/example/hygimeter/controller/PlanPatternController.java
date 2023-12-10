@@ -13,10 +13,12 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -63,4 +65,50 @@ public class PlanPatternController {
         return ResponseEntity.ok()
                 .body(remoteResponse);
     }
+
+    @Operation(summary = "Delete specific plan pattern given its id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Plan Pattern has been successfully deleted", content = @Content(schema = @Schema(implementation = RemoteResponse.class))),
+            @ApiResponse(responseCode = "404", description = "Plan Pattern for a given id has not found", content = @Content(schema = @Schema(implementation = RemoteResponse.class))),
+            @ApiResponse(responseCode = "500", description = "Unexpected internal error", content = @Content(schema = @Schema(implementation = RemoteResponse.class)))
+    })
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
+    @DeleteMapping("/{patternId}")
+    public ResponseEntity<RemoteResponse> deletePlanPattern(@Parameter(description = "Plan Pattern Identification", required = true)
+                                                            @PathVariable("patternId") String id) {
+        planPatternService.deletePlanPattern(Integer.valueOf(id));
+        RemoteResponse remoteResponse = RemoteResponse.create(true, StatusCodes.OK.name(),
+                String.format("Plan Pattern with Id %s has been deleted", id), null);
+        return ResponseEntity.ok().body(remoteResponse);
+    }
+
+    @Operation(summary = "Find specific plan pattern given its id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Plan Pattern has been successfully found", content = @Content(schema = @Schema(implementation = RemoteResponse.class))),
+            @ApiResponse(responseCode = "404", description = "Plan Pattern for a given id has not found", content = @Content(schema = @Schema(implementation = RemoteResponse.class))),
+            @ApiResponse(responseCode = "500", description = "Unexpected internal error", content = @Content(schema = @Schema(implementation = RemoteResponse.class)))
+    })
+    @GetMapping("/{patternId}")
+    public ResponseEntity<RemoteResponse> getPlanPatternById(@PathVariable("patternId") String id){
+        log.info("Starting get plan pattern with id={}", id);
+        PlanPatternDTO planPatternDTO = planPatternService.getPlanPatternById(Integer.valueOf(id));
+        RemoteResponse remoteResponse = RemoteResponse.create(true, StatusCodes.OK.name(), "Plan Pattern found", List.of(planPatternDTO));
+        return ResponseEntity.ok().body(remoteResponse);
+    }
+
+    @Operation(summary = "Find all plan patterns")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Plan Patterns have been successfully found", content = @Content(schema = @Schema(implementation = RemoteResponse.class))),
+            @ApiResponse(responseCode = "404", description = "Plan Patterns have not found", content = @Content(schema = @Schema(implementation = RemoteResponse.class))),
+            @ApiResponse(responseCode = "500", description = "Unexpected internal error", content = @Content(schema = @Schema(implementation = RemoteResponse.class)))
+    })
+    @GetMapping
+    public ResponseEntity<RemoteResponse> getAllPlanPatterns(){
+        log.info("Starting get all plan patterns");
+        List<PlanPatternDTO> list = planPatternService.getAllPlanPatterns();
+        RemoteResponse remoteResponse = RemoteResponse.create(true, StatusCodes.OK.name(), "Plan Patterns found", list);
+        return ResponseEntity.ok().body(remoteResponse);
+    }
+
+
 }

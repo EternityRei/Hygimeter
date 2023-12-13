@@ -34,6 +34,8 @@ public class MicroclimateServiceImpl implements MicroclimateService{
         microclimate.setLightLevel(newMicroclimate.getLightLevel());
         microclimate.setPlan(newMicroclimate.getPlan());
         microclimate.setHumidity(newMicroclimate.getHumidity());
+        microclimate.setTemperatureSked(newMicroclimate.getTemperatureSked());
+        microclimate.setLightsOffTime(newMicroclimate.getLightsOffTime());
 
         return microclimateMapper.toMicroclimateDTO(microclimateRepository.save(microclimate));
     }

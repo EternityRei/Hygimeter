@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface MicroclimatePlanService {
     MicroclimatePlanDTO createMicroclimatePlan(MicroclimatePlanDTO microclimatePlanDTO);
-    MicroclimatePlanDTO updateMicroclimatePlan(MicroclimatePlanDTO microclimatePlanDTO);
+    MicroclimatePlanDTO updateMicroclimatePlan(Integer id, MicroclimatePlanDTO microclimatePlanDTO);
     void deleteMicroclimatePlan(Integer id);
     MicroclimatePlanDTO getMicroclimatePlanById(Integer id);
     List<MicroclimatePlanDTO> findAllMicroclimatePlans();

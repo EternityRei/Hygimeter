@@ -38,14 +38,12 @@ public class MicroclimateDTO {
     @Schema(description = "Humidity")
     private HumidityDTO humidity;
 
-    @Schema(description = "Plan Parameters temperature schedule")
-    @Null(groups = OnCreate.class, message = "Temperature schedule must be null on creating plan parameters")
-    @NotBlank(groups = OnUpdate.class, message = "Temperature schedule must be not null and not empty on updating parameters")
+    @Schema(description = "Microclimate temperature schedule")
+    @NotBlank(message = "Temperature schedule is required field")
     @Length(max = 100, message = "Max size of temperature schedule is 100 characters")
     private String temperatureSked;
 
-    @Schema(description = "Plan Parameters time when lights go off")
-    @Null(groups = OnCreate.class, message = "Time when lights go off must be null on creating plan parameters")
-    @NotNull(groups = OnUpdate.class, message = "Time when lights go off must be not null on updating parameters")
-    private LocalTime lightsOffTime;
+    @Schema(description = "Microclimate lights off time")
+    @NotNull(message = "Lights off time is required field")
+    private String lightsOffTime;
 }

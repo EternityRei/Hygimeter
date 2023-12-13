@@ -8,7 +8,7 @@ import org.mapstruct.factory.Mappers;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring", uses = {UserMapper.class, TopicInfoMapper.class, MicroclimateMapper.class, PlanPatternMapper.class})
+@Mapper(componentModel = "spring", uses = {UserMapper.class, MicroclimateMapper.class})
 public interface MicroclimatePlanMapper {
     MicroclimatePlanMapper INSTANCE = Mappers.getMapper(MicroclimatePlanMapper.class);
 

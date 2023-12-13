@@ -1,5 +1,7 @@
 package com.example.hygimeter.controller;
 
+import com.example.hygimeter.auth.AuthenticationRequest;
+import com.example.hygimeter.auth.AuthenticationResponse;
 import com.example.hygimeter.dto.RemoteResponse;
 import com.example.hygimeter.dto.UserDTO;
 import com.example.hygimeter.dto.group.OnCreate;

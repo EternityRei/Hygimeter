@@ -1,9 +1,5 @@
 package com.example.hygimeter;
 
-import com.example.hygimeter.dto.PlanPatternDTO;
-import com.example.hygimeter.mapper.PlanPatternMapper;
-import com.example.hygimeter.model.PlanPattern;
-import com.example.hygimeter.repository.PlanPatternRepository;
 import com.example.hygimeter.service.PlanPatternServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,7 +7,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import static org.mockito.Mockito.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 class PlanPatternServiceImplTest {
 

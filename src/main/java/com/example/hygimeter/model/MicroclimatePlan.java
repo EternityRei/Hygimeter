@@ -23,7 +23,7 @@ public class MicroclimatePlan {
 
     @OneToOne
     @JoinColumn(name = "initially_microclimate_id")
-    private Microclimate initialMicroclimate;
+    private Microclimate goalMicroclimate;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -32,4 +32,7 @@ public class MicroclimatePlan {
     @ManyToOne
     @JoinColumn(name = "topic_id")
     private TopicInfo topic;
+
+    @Column
+    private String device;
 }

@@ -4,6 +4,7 @@ import com.example.hygimeter.dto.group.OnCreate;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Null;
 import lombok.Data;
 
 @Data
@@ -13,10 +14,10 @@ public class MicroclimatePlanDTO {
     @Schema(description = "Microclimate Plan id")
     private Integer id;
 
-    @NotNull(groups = OnCreate.class, message = "Plan pattern cannot be null")
+    @NotNull(groups = OnCreate.class, message = "Goal Microclimate cannot be null")
     @Valid
-    @Schema(description = "Plan Pattern")
-    private PlanPatternDTO planPattern;
+    @Schema(description = "Microclimate")
+    private MicroclimateDTO goalMicroclimate;
 
     @NotNull(groups = OnCreate.class, message = "Initial Microclimate cannot be null")
     @Valid
@@ -28,8 +29,7 @@ public class MicroclimatePlanDTO {
     @Schema(description = "User")
     private UserDTO user;
 
-    @NotNull(groups = OnCreate.class, message = "Topic cannot be null")
-    @Valid
-    @Schema(description = "Topic Info")
-    private TopicInfoDTO topic;
+    @Null(groups = OnCreate.class, message = "Devices must be null at fulling the form")
+    @Schema(description = "Plan devices")
+    private String device;
 }

@@ -1,11 +1,9 @@
 package com.example.hygimeter.controller;
 
-import com.example.hygimeter.dto.PlanPatternDTO;
 import com.example.hygimeter.dto.RemoteResponse;
 import com.example.hygimeter.dto.group.OnCreate;
 import com.example.hygimeter.dto.group.OnUpdate;
 import com.example.hygimeter.exception.StatusCodes;
-import com.example.hygimeter.model.PlanPattern;
 import com.example.hygimeter.service.PlanPatternService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -14,7 +12,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

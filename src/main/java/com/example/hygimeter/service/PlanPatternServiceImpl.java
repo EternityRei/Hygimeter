@@ -2,16 +2,11 @@ package com.example.hygimeter.service;
 
 import com.example.hygimeter.dto.HumidityDTO;
 import com.example.hygimeter.dto.MicroclimateDTO;
-import com.example.hygimeter.dto.PlanParametersDTO;
-import com.example.hygimeter.dto.PlanPatternDTO;
 import com.example.hygimeter.dto.group.OnCreate;
 import com.example.hygimeter.dto.group.OnUpdate;
 import com.example.hygimeter.exception.EntityNotFoundException;
 import com.example.hygimeter.exception.StatusCodes;
 import com.example.hygimeter.exception.InvalidDataException;
-import com.example.hygimeter.mapper.PlanPatternMapper;
-import com.example.hygimeter.model.PlanPattern;
-import com.example.hygimeter.repository.PlanPatternRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -44,7 +39,6 @@ public class PlanPatternServiceImpl implements PlanPatternService{
         // If everything is fine, update the plan pattern
         PlanPattern newPlanPattern = planPatternMapper.toPlanPattern(planPatternDTO);
         planPattern.setMicroclimatePlans(newPlanPattern.getMicroclimatePlans());
-        planPattern.setDevice(newPlanPattern.getDevice());
         planPattern.setPlanParameters(newPlanPattern.getPlanParameters());
 
         return planPatternMapper.toPlanPatternDTO(planPatternRepository.save(planPattern));
@@ -80,9 +74,6 @@ public class PlanPatternServiceImpl implements PlanPatternService{
 
         if (isCreateOperation && validationGroup.equals(OnCreate.class)) {
             // Perform validations specific to OnCreate group
-            if (planPatternDTO.getDevice() != null) {
-                throw new InvalidDataException(StatusCodes.INVALID_DATA.name(), "Device must be null at fulling the form");
-            }
             if (microclimate != null) {
                 throw new InvalidDataException(StatusCodes.INVALID_DATA.name(), "Microclimate should be null while 1st time creating");
             }

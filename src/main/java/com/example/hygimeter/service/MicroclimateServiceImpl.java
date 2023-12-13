@@ -3,8 +3,6 @@ package com.example.hygimeter.service;
 import com.example.hygimeter.dto.MicroclimateDTO;
 import com.example.hygimeter.mapper.MicroclimateMapper;
 import com.example.hygimeter.model.Microclimate;
-import com.example.hygimeter.model.PlanParameters;
-import com.example.hygimeter.model.PlanPattern;
 import com.example.hygimeter.repository.MicroclimateRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;

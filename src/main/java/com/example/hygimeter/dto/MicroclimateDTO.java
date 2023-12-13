@@ -34,4 +34,13 @@ public class MicroclimateDTO {
     @Valid
     @Schema(description = "Humidity")
     private HumidityDTO humidity;
+
+    @Schema(description = "Microclimate temperature schedule")
+    @NotBlank(message = "Temperature schedule is required field")
+    @Length(max = 100, message = "Max size of temperature schedule is 100 characters")
+    private String temperatureSked;
+
+    @Schema(description = "Microclimate lights off time")
+    @NotNull(message = "Lights off time is required field")
+    private String lightsOffTime;
 }

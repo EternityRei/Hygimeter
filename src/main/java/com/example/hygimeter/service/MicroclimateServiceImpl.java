@@ -3,8 +3,6 @@ package com.example.hygimeter.service;
 import com.example.hygimeter.dto.MicroclimateDTO;
 import com.example.hygimeter.mapper.MicroclimateMapper;
 import com.example.hygimeter.model.Microclimate;
-import com.example.hygimeter.model.PlanParameters;
-import com.example.hygimeter.model.PlanPattern;
 import com.example.hygimeter.repository.MicroclimateRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -36,6 +34,8 @@ public class MicroclimateServiceImpl implements MicroclimateService{
         microclimate.setLightLevel(newMicroclimate.getLightLevel());
         microclimate.setPlan(newMicroclimate.getPlan());
         microclimate.setHumidity(newMicroclimate.getHumidity());
+        microclimate.setTemperatureSked(newMicroclimate.getTemperatureSked());
+        microclimate.setLightsOffTime(newMicroclimate.getLightsOffTime());
 
         return microclimateMapper.toMicroclimateDTO(microclimateRepository.save(microclimate));
     }

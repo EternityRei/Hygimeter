@@ -28,15 +28,15 @@ public class MicroclimatePlanServiceImpl implements MicroclimatePlanService{
     }
 
     @Override
-    public MicroclimatePlanDTO updateMicroclimatePlan(MicroclimatePlanDTO microclimatePlanDTO) {
-        MicroclimatePlan microclimatePlan = microclimatePlanRepository.findById(microclimatePlanDTO.getId())
+    public MicroclimatePlanDTO updateMicroclimatePlan(Integer microclimateId, MicroclimatePlanDTO microclimatePlanDTO) {
+        MicroclimatePlan microclimatePlan = microclimatePlanRepository.findById(microclimateId)
                 .orElseThrow(() -> new EntityNotFoundException("Microclimate Plan not found"));
 
         MicroclimatePlan newMicroclimatePlan = microclimatePlanMapper.toMicroclimatePlan(microclimatePlanDTO);
-        microclimatePlan.setPlanPattern(newMicroclimatePlan.getPlanPattern());
         microclimatePlan.setInitialMicroclimate(newMicroclimatePlan.getInitialMicroclimate());
+        microclimatePlan.setGoalMicroclimate(newMicroclimatePlan.getGoalMicroclimate());
         microclimatePlan.setUser(newMicroclimatePlan.getUser());
-        microclimatePlan.setTopic(newMicroclimatePlan.getTopic());
+        microclimatePlan.setDevice(newMicroclimatePlan.getDevice());
 
         return microclimatePlanMapper.toMicroclimatePlanDTO(microclimatePlanRepository.save(microclimatePlan));
     }

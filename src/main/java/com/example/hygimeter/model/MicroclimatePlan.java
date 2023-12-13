@@ -17,19 +17,18 @@ public class MicroclimatePlan {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne
-    @JoinColumn(name = "plan_pattern_id")
-    private PlanPattern planPattern;
-
     @OneToOne
     @JoinColumn(name = "initially_microclimate_id")
     private Microclimate initialMicroclimate;
+
+    @OneToOne
+    @JoinColumn(name = "goal_microclimate_id")
+    private Microclimate goalMicroclimate;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne
-    @JoinColumn(name = "topic_id")
-    private TopicInfo topic;
+    @Column
+    private String device;
 }

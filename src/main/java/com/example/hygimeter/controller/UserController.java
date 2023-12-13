@@ -2,11 +2,9 @@ package com.example.hygimeter.controller;
 
 import com.example.hygimeter.auth.AuthenticationRequest;
 import com.example.hygimeter.auth.AuthenticationResponse;
-import com.example.hygimeter.dto.PlanPatternDTO;
 import com.example.hygimeter.dto.RemoteResponse;
 import com.example.hygimeter.dto.UserDTO;
 import com.example.hygimeter.dto.group.OnCreate;
-import com.example.hygimeter.service.PlanPatternService;
 import com.example.hygimeter.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;

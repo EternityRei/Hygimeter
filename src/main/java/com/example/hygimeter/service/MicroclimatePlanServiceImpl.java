@@ -4,6 +4,7 @@ import com.example.hygimeter.dto.MicroclimatePlanDTO;
 import com.example.hygimeter.dto.UserDTO;
 import com.example.hygimeter.mapper.MicroclimatePlanMapper;
 import com.example.hygimeter.mapper.UserMapper;
+import com.example.hygimeter.mapper.UserMapperContext;
 import com.example.hygimeter.model.MicroclimatePlan;
 import com.example.hygimeter.model.User;
 import com.example.hygimeter.repository.MicroclimatePlanRepository;
@@ -20,25 +21,28 @@ public class MicroclimatePlanServiceImpl implements MicroclimatePlanService{
     private final MicroclimatePlanRepository microclimatePlanRepository;
     private final MicroclimatePlanMapper microclimatePlanMapper;
     private final UserMapper userMapper;
+    private final UserService userService;
 
     @Override
     public MicroclimatePlanDTO createMicroclimatePlan(MicroclimatePlanDTO microclimatePlanDTO) {
-        MicroclimatePlan microclimatePlan = microclimatePlanMapper.toMicroclimatePlan(microclimatePlanDTO);
-        return microclimatePlanMapper.toMicroclimatePlanDTO(microclimatePlanRepository.save(microclimatePlan));
+        UserMapperContext context = new UserMapperContext(userService);
+        MicroclimatePlan microclimatePlan = microclimatePlanMapper.toMicroclimatePlan(microclimatePlanDTO, context);
+        return microclimatePlanMapper.toMicroclimatePlanDTO(microclimatePlanRepository.save(microclimatePlan), context);
     }
 
     @Override
     public MicroclimatePlanDTO updateMicroclimatePlan(Integer microclimateId, MicroclimatePlanDTO microclimatePlanDTO) {
+        UserMapperContext context = new UserMapperContext(userService);
         MicroclimatePlan microclimatePlan = microclimatePlanRepository.findById(microclimateId)
                 .orElseThrow(() -> new EntityNotFoundException("Microclimate Plan not found"));
 
-        MicroclimatePlan newMicroclimatePlan = microclimatePlanMapper.toMicroclimatePlan(microclimatePlanDTO);
+        MicroclimatePlan newMicroclimatePlan = microclimatePlanMapper.toMicroclimatePlan(microclimatePlanDTO, context);
         microclimatePlan.setInitialMicroclimate(newMicroclimatePlan.getInitialMicroclimate());
         microclimatePlan.setGoalMicroclimate(newMicroclimatePlan.getGoalMicroclimate());
         microclimatePlan.setUser(newMicroclimatePlan.getUser());
         microclimatePlan.setDevice(newMicroclimatePlan.getDevice());
 
-        return microclimatePlanMapper.toMicroclimatePlanDTO(microclimatePlanRepository.save(microclimatePlan));
+        return microclimatePlanMapper.toMicroclimatePlanDTO(microclimatePlanRepository.save(microclimatePlan), context);
     }
 
     @Override
@@ -51,10 +55,11 @@ public class MicroclimatePlanServiceImpl implements MicroclimatePlanService{
 
     @Override
     public MicroclimatePlanDTO getMicroclimatePlanById(Integer id) {
+        UserMapperContext context = new UserMapperContext(userService);
         MicroclimatePlan microclimatePlan = microclimatePlanRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Microclimate Plan not found"));
 
-        return microclimatePlanMapper.toMicroclimatePlanDTO(microclimatePlan);
+        return microclimatePlanMapper.toMicroclimatePlanDTO(microclimatePlan, context);
     }
 
     @Override
@@ -72,16 +77,18 @@ public class MicroclimatePlanServiceImpl implements MicroclimatePlanService{
 
     @Override
     public MicroclimatePlanDTO findMicroclimatePlanByUser(UserDTO userDTO) {
+        UserMapperContext context = new UserMapperContext(userService);
         User user = userMapper.toUser(userDTO);
         MicroclimatePlan microclimatePlan = microclimatePlanRepository.findMicroclimatePlanByUser(user);
-        return microclimatePlanMapper.toMicroclimatePlanDTO(microclimatePlan);
+        return microclimatePlanMapper.toMicroclimatePlanDTO(microclimatePlan, context);
     }
 
     @Override
     public MicroclimatePlanDTO findMicroclimatePlanById(Integer id) {
+        UserMapperContext context = new UserMapperContext(userService);
         MicroclimatePlan microclimatePlan = microclimatePlanRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Microclimate Plan not found"));
 
-        return microclimatePlanMapper.toMicroclimatePlanDTO(microclimatePlan);
+        return microclimatePlanMapper.toMicroclimatePlanDTO(microclimatePlan, context);
     }
 }

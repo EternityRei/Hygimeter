@@ -2,11 +2,14 @@ package com.example.hygimeter.controller;
 
 import com.example.hygimeter.dto.MicroclimatePlanDTO;
 import com.example.hygimeter.dto.RemoteResponse;
+import com.example.hygimeter.dto.UserDTO;
 import com.example.hygimeter.dto.group.OnCreate;
 import com.example.hygimeter.dto.group.OnUpdate;
 import com.example.hygimeter.exception.StatusCodes;
-import com.example.hygimeter.model.MicroclimatePlan;
+import com.example.hygimeter.exception.UnauthorizedPlanCreationException;
+import com.example.hygimeter.model.Role;
 import com.example.hygimeter.service.MicroclimatePlanService;
+import com.example.hygimeter.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -19,6 +22,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,16 +40,33 @@ import static org.springframework.http.HttpStatus.OK;
 public class MicroclimatePlanController {
 
     private final MicroclimatePlanService microclimatePlanService;
+    private final UserService userService;
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<RemoteResponse> createPlan(
-            @Parameter(description = "Microclimate Plan creation", required = true) @Validated(OnCreate.class)
-            @RequestBody MicroclimatePlanDTO microclimatePlanDTO) {
-        log.info("Microclimate Plan creation");
+            @Parameter(description = "Microclimate Plan creation", required = true)
+            @Validated(OnCreate.class)
+            @RequestBody
+            MicroclimatePlanDTO microclimatePlanDTO,
+            @AuthenticationPrincipal UserDetails userDetails) {
+        log.info("Microclimate Plan creation with user {}", userDetails.getUsername());
+
+        UserDTO userDTO = userService.getUserByEmail(userDetails.getUsername());
+
+        if (userDTO.getRole() == Role.ADMIN) {
+            userService.getUserById(microclimatePlanDTO.getUserId());
+            if (microclimatePlanDTO.getUserId() == null) {
+                microclimatePlanDTO.setUserId(userDTO.getId());
+            }
+        } else {
+            // USER is not allowed to create plan for another user
+            if (microclimatePlanDTO.getUserId() != null && !userDTO.getId().equals(microclimatePlanDTO.getUserId())) {
+                throw new UnauthorizedPlanCreationException("User is not allowed to create plan for another user");
+            }
+            microclimatePlanDTO.setUserId(userDTO.getId());
+        }
 
         MicroclimatePlanDTO createdPlan = microclimatePlanService.createMicroclimatePlan(microclimatePlanDTO);
-
-        log.info("Microclimate Plan was created successfully with id={}", microclimatePlanDTO.getId());
 
         RemoteResponse successfulResponse = RemoteResponse.create(true, OK.name(),
                 "Microclimate Plan is successfully created", List.of(createdPlan));

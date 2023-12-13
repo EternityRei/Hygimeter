@@ -7,5 +7,7 @@ public enum StatusCodes {
     IRRELEVANT_EMAIL,
     DUPLICATE_EMAIL,
     ENTITY_NOT_FOUND,
-    INVALID_DATA
+    INVALID_DATA,
+
+    USER_NOT_FOUND
 }

@@ -38,4 +38,10 @@ public class GlobalExceptionHandler {
         return RemoteResponse.create(false, StatusCodes.INVALID_DATA.name(), message, null);
     }
 
+    @ExceptionHandler(UnauthorizedPlanCreationException.class)
+    public RemoteResponse handleUnauthorizedPlanCreation(UnauthorizedPlanCreationException ex) {
+        log.error("The error occur with message={}", ex.getMessage());
+        return RemoteResponse.create(false, ex.getErrorCode(), ex.getMessage(), null);
+    }
+
 }

@@ -4,7 +4,6 @@ import com.example.hygimeter.dto.group.OnCreate;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Null;
 import lombok.Data;
 
 @Data
@@ -24,10 +23,14 @@ public class MicroclimatePlanDTO {
     @Schema(description = "Microclimate")
     private MicroclimateDTO goalMicroclimate;
 
-    @NotNull(groups = OnCreate.class, message = "User cannot be null")
-    @Valid
-    @Schema(description = "User")
-    private UserDTO user;
+//    @NotNull(groups = OnCreate.class, message = "User cannot be null")
+//    @Valid
+//    @Schema(description = "User")
+//    private UserDTO user;
+
+    // Instead of UserDTO, we use only user id
+    @Schema(description = "User id")
+    private Integer userId;
 
     @Schema(description = "Device")
     private String device;

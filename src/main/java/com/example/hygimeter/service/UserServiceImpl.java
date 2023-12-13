@@ -35,4 +35,18 @@ public class UserServiceImpl implements UserService{
             throw new EntityNotFoundException(StatusCodes.DUPLICATE_EMAIL.name(), "This email is already exist");
         }
     }
+
+    @Override
+    public UserDTO getUserByEmail(String email) {
+        User user = userRepository.findUserByEmail(email)
+                .orElseThrow(() -> new EntityNotFoundException(StatusCodes.USER_NOT_FOUND.name(), "User not found"));
+        return userMapper.toUserDTO(user);
+    }
+
+    @Override
+    public UserDTO getUserById(Integer id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(StatusCodes.USER_NOT_FOUND.name(), "User not found"));
+        return userMapper.toUserDTO(user);
+    }
 }

@@ -34,6 +34,6 @@ public class UserDTO {
     @Schema(description = "User password", required = true)
     private String password;
 
-    @Schema(description = "User role")
+    @Schema(description = "User role", defaultValue = "USER")
     private Role role;
 }

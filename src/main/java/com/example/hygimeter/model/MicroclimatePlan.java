@@ -17,11 +17,11 @@ public class MicroclimatePlan {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "initially_microclimate_id")
-    private Microclimate goalMicroclimate;
+    private Microclimate initialMicroclimate;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "goal_microclimate_id")
     private Microclimate goalMicroclimate;
 

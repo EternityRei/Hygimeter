@@ -5,6 +5,7 @@ import com.example.hygimeter.dto.RemoteResponse;
 import com.example.hygimeter.dto.group.OnCreate;
 import com.example.hygimeter.dto.group.OnUpdate;
 import com.example.hygimeter.exception.StatusCodes;
+import com.example.hygimeter.model.PlanPattern;
 import com.example.hygimeter.service.PlanPatternService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -91,8 +92,8 @@ public class PlanPatternController {
     @GetMapping("/{patternId}")
     public ResponseEntity<RemoteResponse> getPlanPatternById(@PathVariable("patternId") String id){
         log.info("Starting get plan pattern with id={}", id);
-        PlanPatternDTO planPatternDTO = planPatternService.getPlanPatternById(Integer.valueOf(id));
-        RemoteResponse remoteResponse = RemoteResponse.create(true, StatusCodes.OK.name(), "Plan Pattern found", List.of(planPatternDTO));
+        PlanPattern planPattern = planPatternService.getPlanPatternById(Integer.valueOf(id));
+        RemoteResponse remoteResponse = RemoteResponse.create(true, StatusCodes.OK.name(), "Plan Pattern found", List.of(planPattern));
         return ResponseEntity.ok().body(remoteResponse);
     }
 
@@ -105,10 +106,8 @@ public class PlanPatternController {
     @GetMapping
     public ResponseEntity<RemoteResponse> getAllPlanPatterns(){
         log.info("Starting get all plan patterns");
-        List<PlanPatternDTO> list = planPatternService.getAllPlanPatterns();
+        List<PlanPattern> list = planPatternService.getAllPlanPatterns();
         RemoteResponse remoteResponse = RemoteResponse.create(true, StatusCodes.OK.name(), "Plan Patterns found", list);
         return ResponseEntity.ok().body(remoteResponse);
     }
-
-
 }

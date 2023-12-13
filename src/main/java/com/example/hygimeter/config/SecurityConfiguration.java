@@ -45,7 +45,6 @@ public class SecurityConfiguration {
                     return configuration;
                 }).and()
                 .authorizeHttpRequests((auth) -> auth
-                        .requestMatchers(HttpMethod.PUT, "/plan-pattern/**").permitAll()  // Allow PUT requests for /plan-pattern/**
                         .requestMatchers(HttpMethod.POST, "/users").permitAll()
                         .requestMatchers("/","/auth/login").permitAll()
                         .anyRequest().authenticated())

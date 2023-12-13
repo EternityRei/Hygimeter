@@ -26,7 +26,7 @@ public class PlanPatternDTO {
     @Schema(description = "Microclimate")
     private MicroclimateDTO microclimateDTO;
 
-    @NotNull(groups = OnCreate.class, message = "Plan parameters cannot be null")
+    @Null(groups = OnCreate.class, message = "Plan parameters should be null while 1st time creating")
     @Valid
     @Schema(description = "Plan Parameters")
     private PlanParametersDTO planParametersDTO;

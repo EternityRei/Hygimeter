@@ -10,14 +10,11 @@ import com.example.hygimeter.exception.EntityNotFoundException;
 import com.example.hygimeter.exception.StatusCodes;
 import com.example.hygimeter.exception.InvalidDataException;
 import com.example.hygimeter.mapper.PlanPatternMapper;
-import com.example.hygimeter.model.Humidity;
-import com.example.hygimeter.model.Microclimate;
-import com.example.hygimeter.model.PlanParameters;
 import com.example.hygimeter.model.PlanPattern;
 import com.example.hygimeter.repository.PlanPatternRepository;
-import io.micrometer.common.util.StringUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -35,6 +32,7 @@ public class PlanPatternServiceImpl implements PlanPatternService{
     }
 
     @Override
+    @Transactional
     public PlanPatternDTO updatePlanPattern(Integer id, PlanPatternDTO planPatternDTO) {
 
         // Fetch the existing plan pattern
@@ -61,17 +59,15 @@ public class PlanPatternServiceImpl implements PlanPatternService{
     }
 
     @Override
-    public PlanPatternDTO getPlanPatternById(Integer id) {
-        PlanPattern planPattern = planPatternRepository.findById(id)
+    public PlanPattern getPlanPatternById(Integer id) {
+        return planPatternRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(StatusCodes.ENTITY_NOT_FOUND.name(), "Plan Pattern not found"));
-
-        return planPatternMapper.toPlanPatternDTO(planPattern);
     }
 
     @Override
-    public List<PlanPatternDTO> getAllPlanPatterns() {
-        List<PlanPattern> planPatterns = planPatternRepository.findAll();
-        return planPatternMapper.toPlanPatternDTOS(planPatterns);
+    @Transactional
+    public List<PlanPattern> getAllPlanPatterns() {
+        return planPatternRepository.findAllPlanPatterns();
     }
 
     private void planPatternValidation(PlanPatternDTO planPatternDTO, Class<?> validationGroup) {

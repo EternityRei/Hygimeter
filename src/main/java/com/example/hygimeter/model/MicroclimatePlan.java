@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "MicroclimatePlan")
+@Table(name = "microclimate_plan")
 public class MicroclimatePlan {
 
     @Id
@@ -18,11 +18,11 @@ public class MicroclimatePlan {
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "planPattern_id")
+    @JoinColumn(name = "plan_pattern_id")
     private PlanPattern planPattern;
 
     @OneToOne
-    @JoinColumn(name = "initiallyMicroclimate_id")
+    @JoinColumn(name = "initially_microclimate_id")
     private Microclimate initialMicroclimate;
 
     @ManyToOne

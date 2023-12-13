@@ -1,7 +1,7 @@
 package com.example.hygimeter.service;
 
 import com.example.hygimeter.dto.PlanPatternDTO;
-import org.springframework.data.relational.core.sql.In;
+import com.example.hygimeter.model.PlanPattern;
 
 import java.util.List;
 
@@ -9,6 +9,6 @@ public interface PlanPatternService {
     PlanPatternDTO createPlanPattern(PlanPatternDTO planPatternDTO);
     PlanPatternDTO updatePlanPattern(Integer id, PlanPatternDTO planPatternDTO);
     void deletePlanPattern(Integer id);
-    PlanPatternDTO getPlanPatternById(Integer id);
-    List<PlanPatternDTO> getAllPlanPatterns();
+    PlanPattern getPlanPatternById(Integer id);
+    List<PlanPattern> getAllPlanPatterns();
 }

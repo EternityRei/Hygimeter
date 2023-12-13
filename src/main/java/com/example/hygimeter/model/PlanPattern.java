@@ -13,14 +13,14 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Builder
-@Table(name = "PlanPattern")
+@Table(name = "plan_pattern")
 public class PlanPattern {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "optimalmicroclimate_id", referencedColumnName = "id")
     private Microclimate microclimate;
 
@@ -31,6 +31,7 @@ public class PlanPattern {
     private String device;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "planParameters_id", referencedColumnName = "id")
+    @JoinColumn(name = "plan_parameters_id", referencedColumnName = "id")
     private PlanParameters planParameters;
 }
+

@@ -11,7 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "TopicsInfo")
+@Table(name = "topics_info")
 public class TopicInfo {
 
     @Id
@@ -30,7 +30,7 @@ public class TopicInfo {
 
     @ManyToMany
     @JoinTable(
-            name = "ThemeTopicsInfo",
+            name = "theme_topics_info",
             joinColumns = @JoinColumn(name = "topics_info_id"),
             inverseJoinColumns = @JoinColumn(name = "theme_id")
     )

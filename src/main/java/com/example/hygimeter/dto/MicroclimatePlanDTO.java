@@ -23,15 +23,9 @@ public class MicroclimatePlanDTO {
     @Schema(description = "Microclimate")
     private MicroclimateDTO goalMicroclimate;
 
-//    @NotNull(groups = OnCreate.class, message = "User cannot be null")
-//    @Valid
-//    @Schema(description = "User")
-//    private UserDTO user;
-
-    // Instead of UserDTO, we use only user id
     @Schema(description = "User id")
     private Integer userId;
 
-    @Schema(description = "Device")
-    private String device;
+    @Schema(description = "Devices")
+    private String devices;
 }

@@ -2,9 +2,9 @@ package com.example.hygimeter.dto;
 
 import com.example.hygimeter.dto.group.OnCreate;
 import com.example.hygimeter.dto.group.OnUpdate;
+import com.example.hygimeter.dto.types.VentilationType;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Null;
@@ -21,14 +21,13 @@ public class MicroclimateDTO {
     private Integer id;
 
     @Schema(description = "Microclimate temperature")
-    @NotBlank(message = "Temperature is required field")
+    @NotBlank(message = "Temperature.java is required field")
     @Length(max = 20, message = "Max size of temperature is 20 characters")
     private String temperature;
 
     @Schema(description = "Microclimate ventilation type")
-    @NotBlank(message = "Ventilation is required field")
-    @Length(max = 100, message = "Max size of ventilation is 100 characters")
-    private String ventilation;
+    @NotNull(message = "Ventilation is required field")
+    private VentilationType ventilation;
 
     @Schema(description = "Microclimate ventilation type")
     private Float lightLevel;
@@ -38,12 +37,9 @@ public class MicroclimateDTO {
     @Schema(description = "Humidity")
     private HumidityDTO humidity;
 
-    @Schema(description = "Microclimate temperature schedule")
-    @NotBlank(message = "Temperature schedule is required field")
-    @Length(max = 100, message = "Max size of temperature schedule is 100 characters")
-    private String temperatureSked;
-
-    @Schema(description = "Microclimate lights off time")
-    @NotNull(message = "Lights off time is required field")
-    private String lightsOffTime;
+    @Schema(description = "Plan Parameters time when lights go off")
+    @Null(groups = OnCreate.class, message = "Time when lights go off must be null on creating plan parameters")
+    @NotNull(groups = OnUpdate.class, message = "Time when lights go off must be not null on updating parameters")
+    private LocalTime lightsOffTime;
 }
+

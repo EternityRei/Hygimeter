@@ -110,7 +110,7 @@
 //                throw new InvalidDataException(StatusCodes.INVALID_DATA.name(), "Absolute humidity must be not null and greater than 0 on updating parameters");
 //            }
 //            if (planParameters.getTemperatureSked() == null || planParameters.getTemperatureSked().isEmpty()) {
-//                throw new InvalidDataException(StatusCodes.INVALID_DATA.name(), "Temperature schedule must be not null and not empty on updating parameters");
+//                throw new InvalidDataException(StatusCodes.INVALID_DATA.name(), "Temperature.java schedule must be not null and not empty on updating parameters");
 //            }
 //            if (planParameters.getTemperatureSked().length() > 100) {
 //                throw new InvalidDataException(StatusCodes.INVALID_DATA.name(), "Max size of temperature schedule is 100 characters");

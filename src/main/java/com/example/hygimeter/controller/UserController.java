@@ -2,10 +2,15 @@ package com.example.hygimeter.controller;
 
 import com.example.hygimeter.auth.AuthenticationRequest;
 import com.example.hygimeter.auth.AuthenticationResponse;
+import com.example.hygimeter.auth.AuthenticationService;
+import com.example.hygimeter.config.JwtService;
 import com.example.hygimeter.dto.RemoteResponse;
 import com.example.hygimeter.dto.UserDTO;
 import com.example.hygimeter.dto.group.OnCreate;
 import com.example.hygimeter.dto.group.OnUpdate;
+import com.example.hygimeter.exception.EntityNotFoundException;
+import com.example.hygimeter.model.User;
+import com.example.hygimeter.repository.UserRepository;
 import com.example.hygimeter.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -23,6 +28,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static com.example.hygimeter.exception.StatusCodes.IRRELEVANT_EMAIL;
 import static org.springframework.http.HttpStatus.OK;
 
 @RestController
@@ -33,6 +39,8 @@ import static org.springframework.http.HttpStatus.OK;
 public class UserController {
 
     private final UserService userService;
+    private final UserRepository userRepository;
+    private final JwtService jwtService;
 
     @Operation(summary = "Register a new user")
     @ApiResponses(value = {
@@ -69,6 +77,21 @@ public class UserController {
         UserDTO updatedUserDto = userService.updateUser(email, userDto);
 
         log.info("User with email={} updated successfully", updatedUserDto.getEmail());
+
+        // If original email and updated email are different, then we need to update token
+        // to authenticate we use AuthenticationController and AuthenticationRequest
+        if (!email.equals(updatedUserDto.getEmail())) {
+            User user = userRepository.findUserByEmail(updatedUserDto.getEmail())
+                    .orElseThrow(() -> new EntityNotFoundException(IRRELEVANT_EMAIL.name(), "This user does not exist"));
+            String jwtToken = jwtService.generateToken(user);
+            RemoteResponse successfulResponse = RemoteResponse.create(
+                    true,
+                    OK.name(),
+                    "User is successfully updated",
+                    List.of(updatedUserDto, jwtToken)
+            );
+            return ResponseEntity.ok().body(successfulResponse);
+        }
 
         RemoteResponse successfulResponse = RemoteResponse.create(true, OK.name(), "User is successfully updated", List.of(updatedUserDto));
         return ResponseEntity.ok().body(successfulResponse);

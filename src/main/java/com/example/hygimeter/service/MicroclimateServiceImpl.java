@@ -1,14 +1,16 @@
 package com.example.hygimeter.service;
 
 import com.example.hygimeter.dto.MicroclimateDTO;
+import com.example.hygimeter.exception.EntityNotFoundException;
 import com.example.hygimeter.mapper.MicroclimateMapper;
 import com.example.hygimeter.model.Microclimate;
 import com.example.hygimeter.repository.MicroclimateRepository;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
+import static com.example.hygimeter.exception.StatusCodes.ENTITY_NOT_FOUND;
 
 @Service
 @RequiredArgsConstructor
@@ -26,7 +28,7 @@ public class MicroclimateServiceImpl implements MicroclimateService{
     @Override
     public MicroclimateDTO updateMicroclimate(MicroclimateDTO microclimateDTO) {
         Microclimate microclimate = microclimateRepository.findById(microclimateDTO.getId())
-                .orElseThrow(() -> new EntityNotFoundException("Microclimate not found"));
+                .orElseThrow(() -> new EntityNotFoundException(ENTITY_NOT_FOUND.name(), "Microclimate not found"));
 
         Microclimate newMicroclimate = microclimateMapper.toMicroclimate(microclimateDTO);
         microclimate.setTemperature(newMicroclimate.getTemperature());
@@ -43,7 +45,7 @@ public class MicroclimateServiceImpl implements MicroclimateService{
     @Override
     public void deleteMicroclimate(Integer id) {
         Microclimate microclimate = microclimateRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Microclimate not found"));
+                .orElseThrow(() -> new EntityNotFoundException(ENTITY_NOT_FOUND.name(), "Microclimate not found"));
 
         microclimateRepository.deleteById(microclimate.getId());
     }
@@ -51,7 +53,7 @@ public class MicroclimateServiceImpl implements MicroclimateService{
     @Override
     public MicroclimateDTO getMicroclimateById(Integer id) {
         Microclimate microclimate = microclimateRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Microclimate not found"));
+                .orElseThrow(() -> new EntityNotFoundException(ENTITY_NOT_FOUND.name(), "Microclimate not found"));
 
         return microclimateMapper.toMicroclimateDTO(microclimate);
     }

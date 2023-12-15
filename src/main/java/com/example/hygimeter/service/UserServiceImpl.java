@@ -11,6 +11,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import static com.example.hygimeter.exception.StatusCodes.ENTITY_NOT_FOUND;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -28,6 +30,21 @@ public class UserServiceImpl implements UserService{
 
         userRepository.save(user);
         return userMapper.toUserDTO(user);
+    }
+
+    @Override
+    public UserDTO updateUser(String email, UserDTO userDTO) {
+        User user = userRepository.findUserByEmail(email)
+                .orElseThrow(() -> new EntityNotFoundException(ENTITY_NOT_FOUND.name(), "User not found"));
+
+        User newUser = userMapper.toUser(userDTO);
+
+        user.setName(newUser.getName());
+        user.setSurname(newUser.getSurname());
+        user.setEmail(newUser.getEmail());
+        user.setRole(newUser.getRole());
+
+        return userMapper.toUserDTO(userRepository.save(user));
     }
 
     private void checkEmailIsUnique(String email){

@@ -32,7 +32,7 @@ import java.util.List;
 import static org.springframework.http.HttpStatus.OK;
 
 @RestController
-@RequestMapping("/microclimat-plan")
+@RequestMapping("/microclimate-plan")
 @RequiredArgsConstructor
 @Slf4j
 @Tag(name = "Microclimate Plan", description = "Microclimate Plan controller")
@@ -111,7 +111,7 @@ public class MicroclimatePlanController {
             @ApiResponse(responseCode = "500", description = "Unexpected internal error", content = @Content(schema = @Schema(implementation = RemoteResponse.class)))
     })
     @GetMapping("/{id}")
-    public ResponseEntity<RemoteResponse> getMicroclimetePlanById(@PathVariable("id") String id){
+    public ResponseEntity<RemoteResponse> getMicroclimatePlanById(@PathVariable("id") String id){
         log.info("Starting get microclimate plan with id={}", id);
         MicroclimatePlanDTO microclimatePlanDTO = microclimatePlanService.getMicroclimatePlanById(Integer.valueOf(id));
         RemoteResponse remoteResponse = RemoteResponse.create(true, StatusCodes.OK.name(), "Microclimate Plan found", List.of(microclimatePlanDTO));
